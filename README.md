@@ -10,6 +10,11 @@ Cargo Procurement from overseas to the East Coast of India*
 VARUNEETI does not stop at forecasting freight rates. It converts market uncertainty into an
 auditable charter decision that respects real vessel and port constraints — then shows its reasoning.
 
+**Repository:** `S2P-CDE` — SAIL Spot-to-Period Charter Decision Engine.
+VARUNEETI is the engine and cockpit implemented in this repository: it analyses freight rates,
+vessel availability and port conditions to recommend how much tonnage SAIL should commit under a
+period charter versus leave open to spot.
+
 > **DISCLAIMER** — All data in this repository is **prototype/proxy data** generated for
 > demonstration. It contains no proprietary SAIL data and no Baltic Exchange data. All costs are
 > **modelled expected values under stated assumptions**, in **USD/tonne** — not quotes, and not
