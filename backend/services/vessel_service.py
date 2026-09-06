@@ -27,7 +27,20 @@ class VesselService:
             cls._ports_df = pd.read_csv(DATA_DIR / "ports.csv")
 
     @classmethod
-    def evaluate_feasibility(cls, request: FeasibilityRequest) -> FeasibilityResponse:
+    def evaluate_feasibility(
+        cls,
+        request: FeasibilityRequest,
+        congestion_multiplier: float = 1.0,
+        excluded_vessel_types: tuple[str, ...] | None = None,
+    ) -> FeasibilityResponse:
+        """
+        Evaluate every vessel class against the destination port.
+
+        `congestion_multiplier` and `excluded_vessel_types` exist so the scenario
+        engine can re-run this same evaluation under a shock without any of the
+        feasibility logic being duplicated elsewhere. Defaults reproduce the
+        unshocked base case exactly.
+        """
         cls._load_data()
         
         # ─── Find Port ───
@@ -36,10 +49,20 @@ class VesselService:
             raise ValueError(f"Unknown destination port: {request.destination}")
         port_dict = port_match.iloc[0].to_dict()
 
+        if congestion_multiplier != 1.0:
+            port_dict = dict(port_dict)
+            port_dict["congestion_index"] = round(
+                port_dict["congestion_index"] * congestion_multiplier, 4
+            )
+
+        excluded = {v.lower() for v in (excluded_vessel_types or ())}
+
         candidates = []
         # ─── Evaluate all vessels ───
         for _, vessel_row in cls._vessels_df.iterrows():
             v_dict = vessel_row.to_dict()
+            if v_dict["vessel_type"].lower() in excluded:
+                continue
             candidate = evaluate_vessel_candidate(
                 vessel=v_dict,
                 port=port_dict,

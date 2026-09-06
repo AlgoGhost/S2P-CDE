@@ -134,25 +134,49 @@ class ForecastResponse(BaseModel):
 # ─── Analyze (placeholder for future slices) ────────────────────────────────
 
 
-class AnalyzeRequest(BaseModel):
-    cargo: str = "Coal"
-    quantity: float = Field(300_000, description="Cargo quantity in tonnes")
-    origin: str = "Australia"
-    destination: str = "Paradip"
-    delivery_start: str = "2026-10-01"
-    delivery_end: str = "2026-12-31"
-    contract_horizon_months: int = 3
+class ScenarioDefinition(BaseModel):
+    """A single what-if case applied to the base decision."""
+    scenario_id: str
+    label: str
+    freight_multiplier: float = Field(1.0, description="Multiplier on the forecast point estimate")
+    congestion_multiplier: float = Field(1.0, description="Multiplier on the port congestion index")
+    excluded_vessel_types: list[str] = Field(default_factory=list)
+    notes: str = ""
 
 
-class ScenarioRequest(BaseModel):
-    base_request: AnalyzeRequest
-    freight_shock_pct: float = Field(0.0, description="Freight rate shock percentage")
-    congestion_change_pct: float = Field(0.0, description="Congestion change percentage")
-    availability_change_pct: float = Field(0.0, description="Vessel availability change")
-    quantity_change_pct: float = Field(0.0, description="Cargo quantity change")
+class ScenarioOutcome(BaseModel):
+    """Result of re-solving the decision under one scenario."""
+    scenario_id: str
+    label: str
+    status: str
+
+    strategy: str
+    vessel_class: str
+    voyages: int
+    lock_percentage: float
+
+    expected_cost: float
+    cost_per_tonne: float
+    risk_score: float
+
+    cost_delta_vs_base: float = Field(..., description="Expected cost minus base case")
+    cost_pct_delta_vs_base: float
+    strategy_changed: bool
+    vessel_changed: bool
+
+    notes: str = ""
 
 
-# ─── Feasibility ────────────────────────────────────────────────────────────
+class ScenarioAnalysisResponse(BaseModel):
+    base_scenario_id: str
+    outcomes: list[ScenarioOutcome]
+    recommendation_is_robust: bool = Field(
+        ..., description="True when no scenario changes the recommended strategy"
+    )
+    robustness_summary: str
+    worst_case_scenario_id: Optional[str] = None
+    assumptions: list[str]
+    data_status: dict
 
 
 class FeasibilityRequest(BaseModel):

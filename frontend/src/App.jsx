@@ -9,6 +9,7 @@ import { FeasibilitySection } from './components/FeasibilitySection'
 import { RiskSection } from './components/RiskSection'
 import { StrategySection } from './components/StrategySection'
 import { RationaleSection, VoyageSection } from './components/RationaleSection'
+import { ScenarioSection } from './components/ScenarioSection'
 import { ArchitectureSection, CostSection, Transparency } from './components/CostSection'
 import { Section } from './components/common'
 import { buildVoyagePlan } from './lib/format'
@@ -84,7 +85,15 @@ export default function App() {
 
   // ── Scroll-spy for the sidebar ───────────────────────────────────────────
   useEffect(() => {
-    const ids = ['cockpit', 'decision', 'forecast', 'feasibility', 'risk', 'strategy']
+    const ids = [
+      'cockpit',
+      'decision',
+      'forecast',
+      'feasibility',
+      'risk',
+      'strategy',
+      'scenarios',
+    ]
     const onScroll = () => {
       let current = 'cockpit'
       for (const id of ids) {
@@ -306,6 +315,8 @@ export default function App() {
                 cargoQuantity={result.request.cargo_quantity}
                 delay={140}
               />
+
+              <ScenarioSection scenarios={result.scenarios} delay={150} />
 
               <VoyageSection
                 optimize={result.optimize}

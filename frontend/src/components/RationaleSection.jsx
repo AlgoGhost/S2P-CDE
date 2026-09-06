@@ -32,7 +32,7 @@ export function RationaleSection({ optimize, delay = 0 }) {
   return (
     <Section
       id="rationale"
-      num="08"
+      num="09"
       title="Why VARUNEETI Chose This Strategy"
       sub="Every line below is emitted by the decision engines — the recommendation is auditable, not a black box."
       delay={delay}
@@ -76,7 +76,7 @@ export function VoyageSection({ optimize, vessel, request, plan, delay = 0 }) {
   return (
     <Section
       id="voyage"
-      num="07"
+      num="08"
       title="Multi-Voyage Procurement Plan"
       sub="How the programme breaks into parcels the selected vessel and port can actually handle."
       delay={delay}

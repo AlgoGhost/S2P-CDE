@@ -15,7 +15,8 @@ export const STAGES = [
   { id: 'feasibility', no: '02', label: 'Vessel–Port Check' },
   { id: 'risk', no: '03', label: 'Risk Assessment' },
   { id: 'optimize', no: '04', label: 'Charter Optimization' },
-  { id: 'decision', no: '05', label: 'Decision Ready' },
+  { id: 'scenario', no: '05', label: 'Stress Testing' },
+  { id: 'decision', no: '06', label: 'Decision Ready' },
 ]
 
 const CHAIN = ['Input', 'Forecast', 'Vessel × Port', 'Risk', 'Optimizer', 'Decision']

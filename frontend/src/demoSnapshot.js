@@ -1,9 +1,9 @@
 /**
- * DEMO SNAPSHOT — captured verbatim from a live VARUNEETI engine run.
+ * DEMO SNAPSHOT - captured verbatim from a live VARUNEETI engine run.
  *
- * These are real API responses (Australia -> Paradip, 300,000 t, 75,000 t parcels,
- * Oct-Dec 2026) recorded on 2026-08-25, NOT hand-written figures. The cockpit
- * only falls back to this payload when the backend is unreachable, and always
+ * Real API responses (Australia -> Paradip, 300,000 t, 75,000 t parcels,
+ * Oct-Dec 2026) recorded on 2026-09-06, NOT hand-written figures. The cockpit
+ * falls back to this payload only when the backend is unreachable, and always
  * labels the screen as a snapshot so it is never mistaken for a live result.
  */
 
@@ -434,38 +434,6 @@ export const DEMO_SNAPSHOT = {
         "lightering": null
       },
       {
-        "vessel_type": "Handysize",
-        "capacity": 35000.0,
-        "draft": 10.0,
-        "loa": 180.0,
-        "beam": 28.0,
-        "parcel_capacity": 35000.0,
-        "voyages_required": 9,
-        "direct_feasible": true,
-        "conditional_feasible": false,
-        "status": "DIRECT_FEASIBLE",
-        "fit_score": 100.0,
-        "fit_reasons": [
-          "Good capacity utilization (100%)",
-          "Capable of serving in 9 voyages"
-        ],
-        "passed_constraints": [
-          "capacity",
-          "draft",
-          "loa",
-          "beam"
-        ],
-        "failed_constraints": [],
-        "handling_days": 12.6,
-        "waiting_days": 1.26,
-        "port_time_days": 13.86,
-        "port_cost": 138600.0,
-        "demurrage_exposure": 0.0,
-        "lightering_cost": 0.0,
-        "total_operational_cost": 138600.0,
-        "lightering": null
-      },
-      {
         "vessel_type": "Supramax",
         "capacity": 55000.0,
         "draft": 11.5,
@@ -476,13 +444,13 @@ export const DEMO_SNAPSHOT = {
         "direct_feasible": true,
         "conditional_feasible": false,
         "status": "DIRECT_FEASIBLE",
-        "fit_score": 100.0,
+        "fit_score": 84.0,
         "fit_reasons": [
           "Good capacity utilization (100%)",
+          "Below requested parcel: 55,000 t capacity vs 75,000 t requested - cargo split across more voyages",
           "Capable of serving in 6 voyages"
         ],
         "passed_constraints": [
-          "capacity",
           "draft",
           "loa",
           "beam"
@@ -495,6 +463,38 @@ export const DEMO_SNAPSHOT = {
         "demurrage_exposure": 0.0,
         "lightering_cost": 0.0,
         "total_operational_cost": 145200.0,
+        "lightering": null
+      },
+      {
+        "vessel_type": "Handysize",
+        "capacity": 35000.0,
+        "draft": 10.0,
+        "loa": 180.0,
+        "beam": 28.0,
+        "parcel_capacity": 35000.0,
+        "voyages_required": 9,
+        "direct_feasible": true,
+        "conditional_feasible": false,
+        "status": "DIRECT_FEASIBLE",
+        "fit_score": 68.0,
+        "fit_reasons": [
+          "Good capacity utilization (100%)",
+          "Below requested parcel: 35,000 t capacity vs 75,000 t requested - cargo split across more voyages",
+          "Capable of serving in 9 voyages"
+        ],
+        "passed_constraints": [
+          "draft",
+          "loa",
+          "beam"
+        ],
+        "failed_constraints": [],
+        "handling_days": 12.6,
+        "waiting_days": 1.26,
+        "port_time_days": 13.86,
+        "port_cost": 138600.0,
+        "demurrage_exposure": 0.0,
+        "lightering_cost": 0.0,
+        "total_operational_cost": 138600.0,
         "lightering": null
       },
       {
@@ -564,38 +564,6 @@ export const DEMO_SNAPSHOT = {
     },
     "alternatives": [
       {
-        "vessel_type": "Handysize",
-        "capacity": 35000.0,
-        "draft": 10.0,
-        "loa": 180.0,
-        "beam": 28.0,
-        "parcel_capacity": 35000.0,
-        "voyages_required": 9,
-        "direct_feasible": true,
-        "conditional_feasible": false,
-        "status": "DIRECT_FEASIBLE",
-        "fit_score": 100.0,
-        "fit_reasons": [
-          "Good capacity utilization (100%)",
-          "Capable of serving in 9 voyages"
-        ],
-        "passed_constraints": [
-          "capacity",
-          "draft",
-          "loa",
-          "beam"
-        ],
-        "failed_constraints": [],
-        "handling_days": 12.6,
-        "waiting_days": 1.26,
-        "port_time_days": 13.86,
-        "port_cost": 138600.0,
-        "demurrage_exposure": 0.0,
-        "lightering_cost": 0.0,
-        "total_operational_cost": 138600.0,
-        "lightering": null
-      },
-      {
         "vessel_type": "Supramax",
         "capacity": 55000.0,
         "draft": 11.5,
@@ -606,13 +574,13 @@ export const DEMO_SNAPSHOT = {
         "direct_feasible": true,
         "conditional_feasible": false,
         "status": "DIRECT_FEASIBLE",
-        "fit_score": 100.0,
+        "fit_score": 84.0,
         "fit_reasons": [
           "Good capacity utilization (100%)",
+          "Below requested parcel: 55,000 t capacity vs 75,000 t requested - cargo split across more voyages",
           "Capable of serving in 6 voyages"
         ],
         "passed_constraints": [
-          "capacity",
           "draft",
           "loa",
           "beam"
@@ -626,6 +594,38 @@ export const DEMO_SNAPSHOT = {
         "lightering_cost": 0.0,
         "total_operational_cost": 145200.0,
         "lightering": null
+      },
+      {
+        "vessel_type": "Handysize",
+        "capacity": 35000.0,
+        "draft": 10.0,
+        "loa": 180.0,
+        "beam": 28.0,
+        "parcel_capacity": 35000.0,
+        "voyages_required": 9,
+        "direct_feasible": true,
+        "conditional_feasible": false,
+        "status": "DIRECT_FEASIBLE",
+        "fit_score": 68.0,
+        "fit_reasons": [
+          "Good capacity utilization (100%)",
+          "Below requested parcel: 35,000 t capacity vs 75,000 t requested - cargo split across more voyages",
+          "Capable of serving in 9 voyages"
+        ],
+        "passed_constraints": [
+          "draft",
+          "loa",
+          "beam"
+        ],
+        "failed_constraints": [],
+        "handling_days": 12.6,
+        "waiting_days": 1.26,
+        "port_time_days": 13.86,
+        "port_cost": 138600.0,
+        "demurrage_exposure": 0.0,
+        "lightering_cost": 0.0,
+        "total_operational_cost": 138600.0,
+        "lightering": null
       }
     ],
     "assumptions": [
@@ -635,7 +635,7 @@ export const DEMO_SNAPSHOT = {
     ]
   },
   "risk": {
-    "overall_score": 35.0,
+    "overall_score": 34.2,
     "risk_level": "MEDIUM",
     "top_drivers": [
       {
@@ -647,20 +647,20 @@ export const DEMO_SNAPSHOT = {
         "explanation": "Forecast volatility is moderate."
       },
       {
-        "factor": "delivery_pressure",
-        "score": 50.0,
+        "factor": "weather",
+        "score": 70.0,
         "weight": 0.15,
-        "contribution": 7.5,
-        "severity": "MEDIUM",
-        "explanation": "Moderate delivery slack assumed."
+        "contribution": 10.5,
+        "severity": "HIGH",
+        "explanation": "Delivery window spans Bay of Bengal cyclone season (Oct, Nov, Dec); seasonal calendar proxy, not a weather forecast."
       },
       {
-        "factor": "weather",
-        "score": 40.0,
-        "weight": 0.15,
-        "contribution": 6.0,
-        "severity": "MEDIUM",
-        "explanation": "Baseline seasonal weather risk proxy applied."
+        "factor": "port_congestion",
+        "score": 20.000000000000018,
+        "weight": 0.2,
+        "contribution": 4.0,
+        "severity": "LOW",
+        "explanation": "Port congestion index is 1.1."
       }
     ],
     "all_drivers": [
@@ -673,20 +673,12 @@ export const DEMO_SNAPSHOT = {
         "explanation": "Forecast volatility is moderate."
       },
       {
-        "factor": "delivery_pressure",
-        "score": 50.0,
-        "weight": 0.15,
-        "contribution": 7.5,
-        "severity": "MEDIUM",
-        "explanation": "Moderate delivery slack assumed."
-      },
-      {
         "factor": "weather",
-        "score": 40.0,
+        "score": 70.0,
         "weight": 0.15,
-        "contribution": 6.0,
-        "severity": "MEDIUM",
-        "explanation": "Baseline seasonal weather risk proxy applied."
+        "contribution": 10.5,
+        "severity": "HIGH",
+        "explanation": "Delivery window spans Bay of Bengal cyclone season (Oct, Nov, Dec); seasonal calendar proxy, not a weather forecast."
       },
       {
         "factor": "port_congestion",
@@ -705,6 +697,14 @@ export const DEMO_SNAPSHOT = {
         "explanation": "Multiple feasible vessel alternatives exist."
       },
       {
+        "factor": "delivery_pressure",
+        "score": 15.0,
+        "weight": 0.15,
+        "contribution": 2.25,
+        "severity": "LOW",
+        "explanation": "91-day window against 13.2 days of modelled port time across 4 voyages (85% slack, sailing time excluded)."
+      },
+      {
         "factor": "operational",
         "score": 20.0,
         "weight": 0.1,
@@ -714,8 +714,10 @@ export const DEMO_SNAPSHOT = {
       }
     ],
     "assumptions": [
-      "Weights are centralized prototype assumptions.",
-      "Weather and Congestion risks are simulated proxies."
+      "Factor weights are centralized prototype assumptions, not calibrated values.",
+      "Port congestion is a proxy derived from the port master congestion index.",
+      "Delivery pressure compares the requested window against the port time the feasibility engine computes for the selected vessel. Voyage sailing time is NOT modelled - the prototype dataset carries no route distances - so this understates true schedule pressure.",
+      "Seasonal risk is a calendar proxy for Bay of Bengal cyclone season and the southwest monsoon. It is not a meteorological forecast."
     ]
   },
   "optimize": {
@@ -728,7 +730,7 @@ export const DEMO_SNAPSHOT = {
       "lock_percentage": 100.0,
       "expected_cost": 8743800.0,
       "cost_per_tonne": 29.15,
-      "risk_score": 35.0
+      "risk_score": 34.2
     },
     "strategy_comparison": [
       {
@@ -767,14 +769,117 @@ export const DEMO_SNAPSHOT = {
     "voyages": 4,
     "decision_drivers": [
       "Risk Driver: Forecast volatility is moderate.",
-      "Risk Driver: Moderate delivery slack assumed.",
-      "Risk Driver: Baseline seasonal weather risk proxy applied.",
-      "Forecast trend is TrendDirection.STABLE with VolatilityLevel.MEDIUM volatility.",
+      "Risk Driver: Delivery window spans Bay of Bengal cyclone season (Oct, Nov, Dec); seasonal calendar proxy, not a weather forecast.",
+      "Risk Driver: Port congestion index is 1.1.",
+      "Forecast trend is STABLE with MEDIUM volatility.",
       "Vessel selected: Panamax (Feasibility: DIRECT_FEASIBLE).",
-      "Risk score evaluated at 35.0/100.",
+      "Risk score evaluated at 34.2/100.",
       "Medium-term selected because market risk is low and cost multiplier is favorable."
     ],
     "assumptions": [
+      "Cost multipliers (Spot=1.0, Short=0.98, Medium=0.95, Hybrid=0.97) are prototype assumptions.",
+      "Risk score is a synthesized proxy for MVP demonstration."
+    ],
+    "data_status": {
+      "prototype": true
+    }
+  },
+  "scenarios": {
+    "base_scenario_id": "BASE",
+    "outcomes": [
+      {
+        "scenario_id": "BASE",
+        "label": "Base Case",
+        "status": "optimal",
+        "strategy": "MEDIUM_TERM",
+        "vessel_class": "Panamax",
+        "voyages": 4,
+        "lock_percentage": 100.0,
+        "expected_cost": 8743800.0,
+        "cost_per_tonne": 29.15,
+        "risk_score": 34.2,
+        "cost_delta_vs_base": 0.0,
+        "cost_pct_delta_vs_base": 0.0,
+        "strategy_changed": false,
+        "vessel_changed": false,
+        "notes": "Unshocked decision using the model's own forecast."
+      },
+      {
+        "scenario_id": "HIGH_FREIGHT",
+        "label": "Freight Spike +25%",
+        "status": "optimal",
+        "strategy": "MEDIUM_TERM",
+        "vessel_class": "Panamax",
+        "voyages": 4,
+        "lock_percentage": 100.0,
+        "expected_cost": 10898400.0,
+        "cost_per_tonne": 36.33,
+        "risk_score": 34.2,
+        "cost_delta_vs_base": 2154600.0,
+        "cost_pct_delta_vs_base": 24.64,
+        "strategy_changed": false,
+        "vessel_changed": false,
+        "notes": "Freight settles 25% above the point forecast."
+      },
+      {
+        "scenario_id": "LOW_FREIGHT",
+        "label": "Freight Fall -20%",
+        "status": "optimal",
+        "strategy": "MEDIUM_TERM",
+        "vessel_class": "Panamax",
+        "voyages": 4,
+        "lock_percentage": 100.0,
+        "expected_cost": 7020120.0,
+        "cost_per_tonne": 23.4,
+        "risk_score": 34.2,
+        "cost_delta_vs_base": -1723680.0,
+        "cost_pct_delta_vs_base": -19.71,
+        "strategy_changed": false,
+        "vessel_changed": false,
+        "notes": "Freight settles 20% below the point forecast."
+      },
+      {
+        "scenario_id": "HIGH_CONGESTION",
+        "label": "Port Congestion +40%",
+        "status": "optimal",
+        "strategy": "HYBRID",
+        "vessel_class": "Panamax",
+        "voyages": 4,
+        "lock_percentage": 60.0,
+        "expected_cost": 8983286.4,
+        "cost_per_tonne": 29.94,
+        "risk_score": 50.2,
+        "cost_delta_vs_base": 239486.4,
+        "cost_pct_delta_vs_base": 2.74,
+        "strategy_changed": true,
+        "vessel_changed": false,
+        "notes": "Discharge port congestion worsens by 40%, extending port time."
+      },
+      {
+        "scenario_id": "LOW_AVAILABILITY",
+        "label": "Preferred Vessel Unavailable",
+        "status": "optimal",
+        "strategy": "MEDIUM_TERM",
+        "vessel_class": "Supramax",
+        "voyages": 6,
+        "lock_percentage": 100.0,
+        "expected_cost": 8756340.0,
+        "cost_per_tonne": 29.19,
+        "risk_score": 38.8,
+        "cost_delta_vs_base": 12540.0,
+        "cost_pct_delta_vs_base": 0.14,
+        "strategy_changed": false,
+        "vessel_changed": true,
+        "notes": "Panamax cannot be fixed in the delivery window; the fleet is re-evaluated without it."
+      }
+    ],
+    "recommendation_is_robust": false,
+    "robustness_summary": "The recommendation is NOT robust: 1 of 4 stress cases change the structure (Port Congestion +40% -> HYBRID). Treat MEDIUM_TERM as conditional on the base forecast holding.",
+    "worst_case_scenario_id": "HIGH_FREIGHT",
+    "assumptions": [
+      "Scenario shock magnitudes are prototype assumptions, not calibrated probabilities or fitted market moves.",
+      "Each scenario re-runs the full forecast/feasibility/risk/strategy path; no cost logic is duplicated in the scenario engine.",
+      "Scenarios are not probability-weighted - they are independent stress cases, so their costs must not be averaged into an expected value.",
       "Cost multipliers (Spot=1.0, Short=0.98, Medium=0.95, Hybrid=0.97) are prototype assumptions.",
       "Risk score is a synthesized proxy for MVP demonstration."
     ],
@@ -792,4 +897,4 @@ export const DEMO_SNAPSHOT = {
   }
 }
 
-export const SNAPSHOT_CAPTURED_AT = '2026-08-25'
+export const SNAPSHOT_CAPTURED_AT = '2026-09-06'

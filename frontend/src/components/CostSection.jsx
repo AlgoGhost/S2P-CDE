@@ -13,7 +13,7 @@ export function CostSection({ forecast, feasibility, optimize, request, delay = 
   return (
     <Section
       id="cost"
-      num="09"
+      num="10"
       title="Expected Cost Breakdown"
       sub="What drives the number? Components the prototype does not model are declared, not filled in."
       delay={delay}
@@ -119,6 +119,7 @@ const ARCH_LAYERS = [
   { layer: 'Feasibility Engine', tech: 'Deterministic constraint\nchecks: draft / LOA / beam\nlightering evaluation' },
   { layer: 'Risk Engine', tech: 'Weighted multi-factor\ncomposite scoring' },
   { layer: 'Optimizer', tech: 'Charter structure\ncost comparison\n+ risk penalties' },
+  { layer: 'Scenario Engine', tech: 'Re-solves the decision\nunder freight, congestion\nand availability shocks' },
   { layer: 'Decision API', tech: 'FastAPI · Pydantic v2\nOpenAPI at /docs' },
   { layer: 'Cockpit', tech: 'React 18 · Vite\nhand-built SVG charts' },
 ]
@@ -127,7 +128,7 @@ export function ArchitectureSection({ delay = 0 }) {
   return (
     <Section
       id="architecture"
-      num="10"
+      num="11"
       title="Decision Architecture"
       sub="Each layer is an independent, testable engine — the data adapter is the only thing production would need to swap."
       delay={delay}

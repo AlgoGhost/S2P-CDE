@@ -26,12 +26,14 @@ from backend.schemas import (
     OptimizeRequest,
     OptimizeResponse,
     RiskRequest,
-    RiskResponse
+    RiskResponse,
+    ScenarioAnalysisResponse,
 )
 from backend.services.forecast_service import ForecastService
 from backend.services.vessel_service import VesselService
 from backend.services.optimize_service import OptimizeService
 from backend.services.risk_service import RiskService
+from backend.services.scenario_service import ScenarioService
 
 # ─── Logging ─────────────────────────────────────────────────────────────────
 
@@ -176,3 +178,30 @@ async def optimize_strategy(request: OptimizeRequest):
         raise HTTPException(status_code=500, detail=f"Optimization engine failed: {e}")
 
 
+# ─── Scenario / Stress Test ──────────────────────────────────────────────────
+
+
+@app.post("/api/scenario", response_model=ScenarioAnalysisResponse)
+async def analyze_scenarios(request: OptimizeRequest):
+    """
+    Re-solve the charter decision under a set of stress cases and report whether
+    the recommendation survives.
+
+    Runs the base case plus freight-spike, freight-fall, high-congestion and
+    preferred-vessel-unavailable scenarios through the same decision path, then
+    reports which of them change the recommended structure.
+    """
+    logger.info(
+        "Scenario analysis for %s->%s, qty=%s",
+        request.origin,
+        request.destination,
+        request.cargo_quantity,
+    )
+    try:
+        return ScenarioService.run(request)
+    except ValueError as e:
+        logger.warning("Scenario ValueError: %s", e)
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.error("Scenario error: %s", e, exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Scenario engine failed: {e}")

@@ -52,11 +52,15 @@ def evaluate_vessel_candidate(
     voyages_req = math.ceil(cargo_quantity / parcel_cap)
 
     # ─── Hard Constraints ───
-    if parcel_cap <= v_cap:
+    # Capacity is evaluated against the parcel size the CALLER asked for, not
+    # against parcel_cap (which is already clamped to v_cap above and so would
+    # make this check vacuously true). A hull smaller than the requested parcel
+    # can still lift the cargo, but only by splitting it into more voyages -
+    # that is a real commercial deviation and must be surfaced, not hidden.
+    requested_parcel = parcel_quantity if parcel_quantity else v_cap
+    parcel_downsized = v_cap < requested_parcel
+    if not parcel_downsized:
         passed.append("capacity")
-    else:
-        # Actually this won't happen due to min() above unless user strictly enforces oversized parcel
-        pass
     
     if v_draft <= p_draft:
         passed.append("draft")
@@ -143,6 +147,17 @@ def evaluate_vessel_candidate(
             fit_score -= 20
             fit_reasons.append("Requires lightering (added cost/risk)")
             
+        if parcel_downsized:
+            # Penalise proportionally to how far short of the requested parcel
+            # the hull falls, so a vessel that meets the parcel outranks one
+            # that only meets it by adding voyages.
+            shortfall = 1.0 - (v_cap / requested_parcel)
+            fit_score -= min(35.0, shortfall * 60.0)
+            fit_reasons.append(
+                f"Below requested parcel: {v_cap:,.0f} t capacity vs "
+                f"{requested_parcel:,.0f} t requested - cargo split across more voyages"
+            )
+
         fit_reasons.append(f"Capable of serving in {voyages_req} voyages")
 
     fit_score = max(0.0, min(100.0, fit_score))

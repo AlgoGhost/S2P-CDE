@@ -15,6 +15,12 @@ VARUNEETI is the engine and cockpit implemented in this repository: it analyses 
 vessel availability and port conditions to recommend how much tonnage SAIL should commit under a
 period charter versus leave open to spot.
 
+**Status:** see [`docs/IMPLEMENTATION_STATUS.md`](docs/IMPLEMENTATION_STATUS.md) for what is
+actually built, [`docs/FINAL_SIH_READINESS.md`](docs/FINAL_SIH_READINESS.md) for the demo
+runbook, and [`docs/CURRENT_STATE_AUDIT.md`](docs/CURRENT_STATE_AUDIT.md) for the engineering
+audit. The optimizer compares four charter structures on a common cost basis — it is **not**
+a MILP, and must not be described as one.
+
 > **DISCLAIMER** — All data in this repository is **prototype/proxy data** generated for
 > demonstration. It contains no proprietary SAIL data and no Baltic Exchange data. All costs are
 > **modelled expected values under stated assumptions**, in **USD/tonne** — not quotes, and not
@@ -81,6 +87,7 @@ model alone would have recommended it.
 | `/api/feasibility` | POST | Vessel–port feasibility across all classes |
 | `/api/risk` | POST | Composite decision risk |
 | `/api/optimize` | POST | Charter strategy recommendation |
+| `/api/scenario` | POST | Stress test: re-solves the decision under 5 shock cases |
 
 `/api/optimize` returns the recommendation and strategy comparison but does not nest the forecast,
 feasibility or risk payloads — the cockpit calls all four endpoints and assembles the view.

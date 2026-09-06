@@ -1,0 +1,11 @@
+# VARUNEETI — Python dependencies (repository root)
+#
+# Install from a clean checkout:
+#     python -m venv .venv
+#     .venv\Scripts\activate        # Windows
+#     source .venv/bin/activate     # macOS / Linux
+#     pip install -r requirements.txt
+#
+# The frontend has its own dependencies: cd frontend && npm install
+
+-r backend/requirements.txt

@@ -95,6 +95,9 @@ export const postRisk = (payload) => request('/api/risk', { method: 'POST', body
 export const postOptimize = (payload) =>
   request('/api/optimize', { method: 'POST', body: payload })
 
+export const postScenario = (payload) =>
+  request('/api/scenario', { method: 'POST', body: payload })
+
 /**
  * Run the full decision loop, reporting progress per stage.
  *
@@ -137,12 +140,24 @@ export async function runDecisionLoop(form, onStage = () => {}) {
   onStage('optimize')
   const optimize = await postOptimize(decisionPayload)
 
+  // Stress cases reuse the memoised forecast, so this is near-instant once the
+  // base decision has been solved.
+  onStage('scenario')
+  let scenarios = null
+  try {
+    scenarios = await postScenario(decisionPayload)
+  } catch (err) {
+    // Stress testing is additive - never fail the whole decision over it.
+    console.warn('Scenario analysis unavailable:', err.message)
+  }
+
   onStage('decision')
   return {
     forecast,
     feasibility,
     risk,
     optimize,
+    scenarios,
     request: decisionPayload,
     completedAt: new Date(),
     live: true,

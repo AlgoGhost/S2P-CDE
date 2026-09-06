@@ -22,7 +22,20 @@ class OptimizeService:
     HYBRID_MULTIPLIER = 0.97
     
     @classmethod
-    def optimize(cls, request: OptimizeRequest) -> OptimizeResponse:
+    def optimize(
+        cls,
+        request: OptimizeRequest,
+        freight_multiplier: float = 1.0,
+        congestion_multiplier: float = 1.0,
+        excluded_vessel_types: tuple[str, ...] | None = None,
+    ) -> OptimizeResponse:
+        """
+        Compare charter structures and recommend one.
+
+        The three multiplier/exclusion arguments let the scenario engine re-run
+        this exact decision path under a shock. Defaults reproduce the unshocked
+        base case byte-for-byte, so existing callers are unaffected.
+        """
         drivers = []
         assumptions = [
             "Cost multipliers (Spot=1.0, Short=0.98, Medium=0.95, Hybrid=0.97) are prototype assumptions.",
@@ -39,7 +52,7 @@ class OptimizeService:
             )
             trend = forecast_data.trend
             volatility = forecast_data.volatility
-            freight_base = forecast_data.forecast
+            freight_base = forecast_data.forecast * freight_multiplier
         except Exception as e:
             raise ValueError(f"Failed to get forecast: {e}")
 
@@ -50,7 +63,11 @@ class OptimizeService:
             cargo_quantity=request.cargo_quantity,
             parcel_quantity=request.parcel_quantity
         )
-        feas_data = VesselService.evaluate_feasibility(v_req)
+        feas_data = VesselService.evaluate_feasibility(
+            v_req,
+            congestion_multiplier=congestion_multiplier,
+            excluded_vessel_types=excluded_vessel_types,
+        )
         
         if not feas_data.recommended_vessel:
             return OptimizeResponse(
@@ -85,7 +102,11 @@ class OptimizeService:
             delivery_end=request.delivery_end
         )
         try:
-            risk_data = RiskService.evaluate_risk(r_req)
+            risk_data = RiskService.evaluate_risk(
+                r_req,
+                congestion_multiplier=congestion_multiplier,
+                excluded_vessel_types=excluded_vessel_types,
+            )
             risk_score = risk_data.overall_score
             drivers.extend([f"Risk Driver: {d.explanation}" for d in risk_data.top_drivers])
         except Exception as e:
@@ -124,7 +145,7 @@ class OptimizeService:
         best_strat = min(strats, key=lambda x: x.cost)
         
         # Build drivers
-        drivers.append(f"Forecast trend is {trend} with {volatility} volatility.")
+        drivers.append(f"Forecast trend is {trend.value} with {volatility.value} volatility.")
         drivers.append(f"Vessel selected: {vessel.vessel_type} (Feasibility: {vessel.status.value}).")
         drivers.append(f"Risk score evaluated at {risk_score:.1f}/100.")
         

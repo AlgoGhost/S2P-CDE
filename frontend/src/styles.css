@@ -734,7 +734,7 @@ select.field__control option {
 
 .stages {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 8px;
   margin-top: 14px;
 }
@@ -2058,7 +2058,7 @@ select.field__control option {
 
 .archrail {
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-columns: repeat(8, minmax(0, 1fr));
   gap: 8px;
 }
 
@@ -2314,4 +2314,55 @@ select.field__control option {
     font-size: 14px;
     letter-spacing: -0.01em;
   }
+}
+
+/* ── Scenario / stress test ──────────────────────────────── */
+
+.robust-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  font-size: 12.5px;
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+
+.robust-banner--robust {
+  border-left: 3px solid var(--green);
+  background: rgba(34, 197, 94, 0.07);
+  color: #b7e9c9;
+}
+
+.robust-banner--fragile {
+  border-left: 3px solid var(--amber);
+  background: rgba(245, 158, 11, 0.07);
+  color: #fbd9a5;
+}
+
+.robust-banner__glyph {
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.scenario-row--flip {
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.12), transparent) !important;
+  box-shadow: inset 3px 0 0 var(--amber);
+}
+
+.scenario-row--base {
+  background: rgba(59, 130, 246, 0.07) !important;
+  box-shadow: inset 3px 0 0 var(--blue);
+}
+
+.delta-pos {
+  color: var(--red);
+}
+.delta-neg {
+  color: var(--green);
+}
+.delta-zero {
+  color: var(--text-dim);
 }

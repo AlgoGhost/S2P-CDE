@@ -7,7 +7,8 @@ export const NAV_ITEMS = [
   { id: 'forecast', label: 'Freight Forecast' },
   { id: 'feasibility', label: 'Vessel & Port' },
   { id: 'risk', label: 'Risk Radar' },
-  { id: 'strategy', label: 'Scenarios' },
+  { id: 'strategy', label: 'Strategy' },
+  { id: 'scenarios', label: 'Scenarios' },
 ]
 
 function Anchor() {

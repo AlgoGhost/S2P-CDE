@@ -15,6 +15,7 @@ models) can be done without touching the optimizer or API layers.
 from __future__ import annotations
 
 import logging
+from functools import lru_cache
 
 from backend.config import ABSOLUTE_MIN_OBSERVATIONS, DATA_DISCLAIMER, DATA_SOURCE_LABEL
 from backend.engines.forecasting import ForecastResult, run_forecast
@@ -45,6 +46,31 @@ class ForecastService:
 
     @staticmethod
     def forecast(
+        origin: str,
+        destination: str,
+        vessel_type: str,
+        horizon_days: int = 30,
+    ) -> ForecastResponse:
+        """
+        Memoised entry point.
+
+        Forecasting is a pure function of the CSV dataset and these four
+        arguments, and the prototype never mutates that dataset at runtime, so
+        repeated calls are safe to serve from cache. This matters because a
+        single decision fans out into several forecast calls (the optimizer and
+        the risk engine each need one) and the scenario engine repeats the whole
+        decision five times - the shock multipliers are applied *after*
+        forecasting, so the underlying forecast is identical across scenarios.
+
+        Callers treat the response as read-only.
+        """
+        return ForecastService._forecast_cached(
+            origin, destination, vessel_type, horizon_days
+        )
+
+    @staticmethod
+    @lru_cache(maxsize=256)
+    def _forecast_cached(
         origin: str,
         destination: str,
         vessel_type: str,

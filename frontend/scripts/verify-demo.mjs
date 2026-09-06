@@ -8,17 +8,22 @@
  *   node scripts/verify-demo.mjs
  */
 import puppeteer from 'puppeteer-core'
-import { existsSync, mkdirSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 
+// Chrome first: puppeteer-core tracks Chrome's CDP surface most closely, and
+// an Edge major-version bump has broken headless launch here before.
 const CANDIDATES = [
-  'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
-  'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
+  process.env.BROWSER_PATH,
   'C:/Program Files/Google/Chrome/Application/chrome.exe',
   'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-]
+  'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
+  'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
+].filter(Boolean)
 const executablePath = CANDIDATES.find((p) => existsSync(p))
 if (!executablePath) {
-  console.error('No Edge/Chrome binary found.')
+  console.error('No Chrome/Edge binary found. Set BROWSER_PATH to override.')
   process.exit(1)
 }
 
@@ -34,10 +39,19 @@ const abortedRequests = []
 // that is harness teardown, not a product defect.
 let tearingDown = false
 
+// Use a throwaway profile: launching against the user's real Edge profile
+// fails if that profile is already open or locked.
+const profileDir = mkdtempSync(join(tmpdir(), 'varuneeti-verify-'))
+
 const browser = await puppeteer.launch({
   executablePath,
-  headless: 'new',
-  args: ['--no-sandbox', '--disable-dev-shm-usage'],
+  headless: true,
+  args: [
+    '--no-sandbox',
+    '--disable-dev-shm-usage',
+    '--disable-gpu',
+    `--user-data-dir=${profileDir}`,
+  ],
 })
 
 let exitCode = 0
@@ -108,6 +122,8 @@ try {
     'Decision drivers': '#rationale .reason',
     'Cost breakdown': '#cost .costrow',
     'Architecture rail': '#architecture .arch',
+    'Scenario stress test': '#scenarios .table tbody tr',
+    'Robustness banner': '.robust-banner',
     'Data transparency': '.transparency',
   }
 
