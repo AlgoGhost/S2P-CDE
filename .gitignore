@@ -1,0 +1,52 @@
+# ── Python ───────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+
+# Root-anchored so these never swallow source directories deeper in the
+# tree (an unanchored `lib/` would exclude frontend/src/lib/).
+/build/
+/develop-eggs/
+/dist/
+/downloads/
+/eggs/
+/.eggs/
+/lib/
+/lib64/
+/parts/
+/sdist/
+/var/
+/wheels/
+/env/
+
+# ── Node / frontend ──────────────────────────────────────────────────
+node_modules/
+frontend/dist/
+frontend/screenshots/
+frontend/.env
+frontend/.vite/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+.pnp
+.pnp.js
+
+# ── Environments ─────────────────────────────────────────────────────
+.env
+.venv
+venv/
+
+# ── OS ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Project ──────────────────────────────────────────────────────────
+# Prototype/proxy datasets ARE committed: the demo cannot run without
+# vessels.csv and ports.csv, and freight.csv is the forecasting series.
+# They are generated, non-proprietary fixtures (see backend/data/*.py).
